@@ -31,7 +31,7 @@ export function setViewResizeHandler(callback, dotNetHelper) {
     }
 };
 
-function getElementRect(element) {
+export function getElementRect(element) {
 
     if (typeof element === 'string') {
 

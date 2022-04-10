@@ -24,7 +24,7 @@ jobs:
         dotnet-version: '6.0.x'
         source-url: https://nuget.pkg.github.com/OctarinaCompany/index.json
       env:
-        NUGET_AUTH_TOKEN: ${{ secrets.BROWSERSIZE_TOKEN }}
+        NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Restore
       run: dotnet restore ./BrowserSize
@@ -36,7 +36,7 @@ jobs:
       run: dotnet pack ./BrowserSize --configuration Release --no-restore -p:PackageVersion=1.2.3
 
     - name: Push package to github registry
-      run: dotnet nuget push ./BrowserSize/bin/Release/*.nupkg --skip-duplicate --api-key ${{ secrets.BROWSERSIZE_TOKEN }}
+      run: dotnet nuget push ./BrowserSize/bin/Release/*.nupkg --skip-duplicate --no-symbols --api-key ${{ secrets.BROWSERSIZE_TOKEN }}
 
     - name: Release notes and files
       uses: ncipollo/release-action@v1
