@@ -11,8 +11,11 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
     name: Build and Push Package
+    runs-on: ubuntu-20.04
+    strategy:
+          matrix:
+            project: [Blazor.BrowserSize]
 
     steps:
     - name: Checkout
@@ -27,21 +30,21 @@ jobs:
         NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Restore
-      run: dotnet restore ./BrowserSize
+      run: dotnet restore ./${{ matrix.project }}
 
     - name: Build 
-      run: dotnet build ./BrowserSize --configuration Release --no-restore -p:Version=1.2.4
+      run: dotnet build ./${{ matrix.project }} --configuration Release --no-restore -p:Version=1.2.4
 
     - name: Pack
-      run: dotnet pack ./BrowserSize --configuration Release --no-restore -p:PackageVersion=1.2.4
+      run: dotnet pack ./${{ matrix.project }} --configuration Release --no-restore -p:PackageVersion=1.2.4
 
     - name: Push package to github registry
-      run: dotnet nuget push ./BrowserSize/bin/Release/*.nupkg --skip-duplicate --no-symbols --api-key ${{ secrets.GITHUB_TOKEN }}
+      run: dotnet nuget push ./${{ matrix.project }}/bin/Release/*.nupkg --skip-duplicate --no-symbols --api-key ${{ secrets.GITHUB_TOKEN }}
 
     - name: Release notes and files
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "./BrowserSize/bin/Release/*.nupkg"
+        artifacts: "./${{ matrix.project }}/bin/Release/*.nupkg"
         tag: "1.2.4"
         bodyFile: "release-notes.md"
         token: ${{ secrets.GITHUB_TOKEN }}
@@ -51,6 +54,6 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: Nuget package
-        path: ./BrowserSize/bin/Release/*.nupkg
+        path: ./${{ matrix.project }}/bin/Release/*.nupkg
 
 
