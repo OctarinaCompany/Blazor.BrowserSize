@@ -54,12 +54,10 @@ jobs:
       run: dotnet restore ./${{ env.PROJECT_NAME }}
 
     - name: Build 
-      shell: pwsh
-      run: dotnet build ./${{ env.PROJECT_NAME }} --configuration Release --no-restore -p:Version=$Env:VERSION
+      run: dotnet build ./${{ env.PROJECT_NAME }} --configuration Release --no-restore -p:Version=${{ env.VERSION }}
 
     - name: Pack
-      shell: pwsh
-      run: dotnet pack ./${{ env.PROJECT_NAME }} --configuration Release --no-restore -p:PackageVersion=$Env:VERSION
+      run: dotnet pack ./${{ env.PROJECT_NAME }} --configuration Release --no-restore -p:PackageVersion=${{ env.VERSION }}
 
     - name: Push package to github registry
       run: dotnet nuget push ./${{ env.PROJECT_NAME }}/bin/Release/*.nupkg --skip-duplicate --no-symbols --api-key ${{ secrets.GITHUB_TOKEN }}
@@ -68,7 +66,7 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         artifacts: "./${{ env.PROJECT_NAME }}/bin/Release/*.nupkg"
-        tag: "1.2.5"
+        tag: ${{ env.VERSION }}
         bodyFile: "release-notes.md"
         token: ${{ secrets.GITHUB_TOKEN }}
         #prerelease: ${{ env.GitVersion_BranchName != 'main' }}
