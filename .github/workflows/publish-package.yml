@@ -27,7 +27,7 @@ jobs:
         NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Restore
-      run: dotnet restore .\BrowserSize\
+      run: dotnet restore .\BrowserSize\BrowserSize.csproj
 
     - name: Build 
       run: dotnet build .\BrowserSize\ --configuration Release --no-restore -p:Version=1.2.3
