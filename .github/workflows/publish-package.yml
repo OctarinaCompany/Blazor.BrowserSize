@@ -36,7 +36,7 @@ jobs:
       run: dotnet pack ./BrowserSize --configuration Release --no-restore -p:PackageVersion=1.2.3
 
     - name: Push package to github registry
-      run: dotnet nuget push ./BrowserSize/bin/Release/*.nupkg --skip-duplicate --no-symbols --api-key ${{ secrets.BROWSERSIZE_TOKEN }}
+      run: dotnet nuget push ./BrowserSize/bin/Release/*.nupkg --skip-duplicate --no-symbols --api-key ${{ secrets.GITHUB_TOKEN }}
 
     - name: Release notes and files
       uses: ncipollo/release-action@v1
