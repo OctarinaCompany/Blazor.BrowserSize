@@ -24,7 +24,7 @@ jobs:
         dotnet-version: '6.0.x'
         source-url: https://nuget.pkg.github.com/OctarinaCompany/index.json
       env:
-        NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NUGET_AUTH_TOKEN: ${{ secrets.BROWSERSIZE_TOKEN }}
 
     - name: Restore
       run: dotnet restore ./BrowserSize
