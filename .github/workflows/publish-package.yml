@@ -10,6 +10,10 @@ env:
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   DOTNET_NOLOGO: true
 
+
+#delete package
+#curl -X DELETE -H "Accept: application/vnd.github.v3+json" -u ${{ secrets.GITHUB_TOKEN }}:x-oauth-basic https://api.github.com/orgs/OctarinaCompany/packages/nuget/${{ env.PROJECT_NAME }}
+
 jobs:
   build:
     name: Build and Push Package
@@ -27,14 +31,35 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Version
+      shell: pwsh
+      run: |
+        $previousVersion = "0.0.0"
+        $json = curl -H "Accept: application/vnd.github.v3+json" -u ${{ secrets.GITHUB_TOKEN }}:x-oauth-basic https://api.github.com/repos/OctarinaCompany/${{ env.PROJECT_NAME }}/releases/latest | ConvertFrom-JSON
+        
+        if ($json.tag_name) {
+          $previousVersion = $json.tag_name
+        }
+                
+        $version = [int]($json.tag_name.Replace(".","")) + 1
+        $version = [string]("{0:d3}" -f $version)
+        $version = $version.Insert($version.length-1,".").Insert($version.length-2,".")
+
+        echo "VERSION=$version" >> $Env:GITHUB_ENV
+
+        Write-Host "previous : $previousVersion"
+        Write-Host "current  : $version"
+
     - name: Restore
       run: dotnet restore ./${{ env.PROJECT_NAME }}
 
     - name: Build 
-      run: dotnet build ./${{ env.PROJECT_NAME }} --configuration Release --no-restore -p:Version=1.2.5
+      shell: pwsh
+      run: dotnet build ./${{ env.PROJECT_NAME }} --configuration Release --no-restore -p:Version=$Env:VERSION
 
     - name: Pack
-      run: dotnet pack ./${{ env.PROJECT_NAME }} --configuration Release --no-restore -p:PackageVersion=1.2.5
+      shell: pwsh
+      run: dotnet pack ./${{ env.PROJECT_NAME }} --configuration Release --no-restore -p:PackageVersion=$Env:VERSION
 
     - name: Push package to github registry
       run: dotnet nuget push ./${{ env.PROJECT_NAME }}/bin/Release/*.nupkg --skip-duplicate --no-symbols --api-key ${{ secrets.GITHUB_TOKEN }}
