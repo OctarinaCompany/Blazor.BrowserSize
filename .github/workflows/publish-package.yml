@@ -30,10 +30,10 @@ jobs:
       run: dotnet restore ./BrowserSize
 
     - name: Build 
-      run: dotnet build ./BrowserSize --configuration Release --no-restore -p:Version=1.2.3
+      run: dotnet build ./BrowserSize --configuration Release --no-restore -p:Version=1.2.4
 
     - name: Pack
-      run: dotnet pack ./BrowserSize --configuration Release --no-restore -p:PackageVersion=1.2.3
+      run: dotnet pack ./BrowserSize --configuration Release --no-restore -p:PackageVersion=1.2.4
 
     - name: Push package to github registry
       run: dotnet nuget push ./BrowserSize/bin/Release/*.nupkg --skip-duplicate --no-symbols --api-key ${{ secrets.GITHUB_TOKEN }}
@@ -42,7 +42,7 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         artifacts: "./BrowserSize/bin/Release/*.nupkg"
-        tag: "1.2.3"
+        tag: "1.2.4"
         bodyFile: "release-notes.md"
         token: ${{ secrets.GITHUB_TOKEN }}
         prerelease: ${{ env.GitVersion_BranchName != 'main' }}
