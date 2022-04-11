@@ -7,21 +7,22 @@
 		<Authors>Sylvain Le Breton</Authors>
 		<Company>Octarina</Company>
 		<PackageId>Octarina.BrowserSize</PackageId>
+		<RepositoryUrl>https://github.com/OctarinaCompany/Blazor.BrowserSize</RepositoryUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Description>
 			Blazor Browser Resize events (body,window,screen). Get element rectangle. Fullscreen check.
 		</Description>
 		<PackageTags>Blazor;Resize;Event;Browser;Window;Screen;getBoundingClientRect;Element;DOMRect</PackageTags>
-		<RepositoryUrl>https://github.com/OctarinaCompany/Blazor.BrowserSize</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="..\README.md" Pack="true" PackagePath="README.md" />
+		<SupportedPlatform Include="browser" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<SupportedPlatform Include="browser" />
+		<None Include="..\README.md" Pack="true" PackagePath="\"/>
 	</ItemGroup>
 
 	<ItemGroup>
