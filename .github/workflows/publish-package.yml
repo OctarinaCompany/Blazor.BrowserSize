@@ -6,14 +6,10 @@ on:
 
 env:
   PROJECT_NAME: Blazor.BrowserSize
-  ORGANIZATION: OctarinaCompany
   NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   DOTNET_NOLOGO: true
 
-
-#delete package
-#curl -X DELETE -H "Accept: application/vnd.github.v3+json" -u ${{ secrets.GITHUB_TOKEN }}:x-oauth-basic https://api.github.com/orgs/${{ env.ORGANIZATION }}/packages/nuget/${{ env.PROJECT_NAME }}
 
 jobs:
   build:
@@ -31,28 +27,17 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: '6.0.x'
-      #   source-url: https://nuget.pkg.github.com/${{ env.ORGANIZATION }}/index.json
-      # env:
-      #   NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Version
       shell: pwsh
       run: |
-        $previousVersion = "0.0.0"
-        $json = curl -H "Accept: application/vnd.github.v3+json" -u ${{ secrets.GITHUB_TOKEN }}:x-oauth-basic https://api.github.com/repos/${{ env.ORGANIZATION }}/${{ env.PROJECT_NAME }}/releases/latest | ConvertFrom-JSON
-        
-        if ($json.tag_name) {
-          $previousVersion = $json.tag_name
-        }
-                
-        $version = [int]($previousVersion.Replace(".","")) + 1
-        $version = [string]("{0:d3}" -f $version)
+        # get the latest version from nuget registry, increment it and store it to ${{ env.VERSION }}
+        $json = curl https://api.nuget.org/v3-flatcontainer/Octarina.BrowserSize/index.json | ConvertFrom-Json
+        if ($json.versions[0]) { $previousVersion = $json.versions[0] } else { $previousVersion = "0.0.0" }
+        $version = ([int]($previousVersion.Replace(".","")) + 1).ToString("d3")
         $version = $version.Insert($version.length-1,".").Insert($version.length-2,".")
-
         echo "VERSION=$version" >> $Env:GITHUB_ENV
-
-        Write-Host "previous : $previousVersion"
-        Write-Host "current  : $version"
+        Write-Host "$previousVersion -> ${{ env.VERSION }}"
 
     - name: Restore
       run: dotnet restore ./${{ env.PROJECT_NAME }}
