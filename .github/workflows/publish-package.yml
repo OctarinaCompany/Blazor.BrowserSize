@@ -34,9 +34,9 @@ jobs:
         # get the latest version from nuget registry, increment it and store it to ${{ env.VERSION }}
         #$json = curl https://api.nuget.org/v3-flatcontainer/Octarina.BrowserSize/index.json | ConvertFrom-Json
 
-        Invoke-WebRequest "https://api.nuget.org/v3-flatcontainer/Octarina.BrowserSize/index.json"
+        Invoke-WebRequest "https://api.nuget.org/v3-flatcontainer/octarina.browsersize/index.json"
 
-        $json = (Invoke-WebRequest "https://api.nuget.org/v3-flatcontainer/Octarina.BrowserSize/index.json").Content
+        $json = (Invoke-WebRequest "https://api.nuget.org/v3-flatcontainer/octarina.browsersize/index.json").Content
         Write-Host  $json        
 
         $json = $json | ConvertFrom-Json
