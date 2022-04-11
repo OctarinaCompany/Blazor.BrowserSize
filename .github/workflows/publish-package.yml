@@ -32,7 +32,13 @@ jobs:
       shell: pwsh
       run: |
         # get the latest version from nuget registry, increment it and store it to ${{ env.VERSION }}
-        $json = curl https://api.nuget.org/v3-flatcontainer/Octarina.BrowserSize/index.json | ConvertFrom-Json
+        #$json = curl https://api.nuget.org/v3-flatcontainer/Octarina.BrowserSize/index.json | ConvertFrom-Json
+
+        $json = (Invoke-WebRequest https://api.nuget.org/v3-flatcontainer/Octarina.BrowserSize/index.json).Content
+        Write-Host  $json        
+
+        $json = $json | ConvertFrom-Json
+
         if ($json.versions[0]) { $previousVersion = $json.versions[0] } else { $previousVersion = "0.0.0" }
         $version = ([int]($previousVersion.Replace(".","")) + 1).ToString("d3")
         $version = $version.Insert($version.length-1,".").Insert($version.length-2,".")
