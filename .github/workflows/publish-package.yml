@@ -32,20 +32,12 @@ jobs:
       shell: pwsh
       run: |
         # get the latest version from nuget registry, increment it and store it to ${{ env.VERSION }}
-        #$json = curl https://api.nuget.org/v3-flatcontainer/Octarina.BrowserSize/index.json | ConvertFrom-Json
-
-        Invoke-WebRequest "https://api.nuget.org/v3-flatcontainer/octarina.browsersize/index.json"
-
-        $json = (Invoke-WebRequest "https://api.nuget.org/v3-flatcontainer/octarina.browsersize/index.json").Content
-        Write-Host  $json        
-
-        $json = $json | ConvertFrom-Json
-
+        $json = (Invoke-WebRequest "https://api.nuget.org/v3-flatcontainer/octarina.browsersize/index.json").Content | ConvertFrom-Json
         if ($json.versions[0]) { $previousVersion = $json.versions[0] } else { $previousVersion = "0.0.0" }
         $version = ([int]($previousVersion.Replace(".","")) + 1).ToString("d3")
         $version = $version.Insert($version.length-1,".").Insert($version.length-2,".")
         echo "VERSION=$version" >> $Env:GITHUB_ENV
-        Write-Host "$previousVersion -> ${{ env.VERSION }}"
+        Write-Host "$previousVersion -> $version"
 
     - name: Restore
       run: dotnet restore ./${{ env.PROJECT_NAME }}
@@ -69,8 +61,8 @@ jobs:
         tag: ${{ env.VERSION }}
         bodyFile: "release-notes.md"
         token: ${{ secrets.GITHUB_TOKEN }}
-        #prerelease: ${{ env.GitVersion_BranchName != 'main' }}
-        #draft: ${{ contains(env.GitVersion_BranchName, 'feature') }}
+        prerelease: ${ GITHUB_REF##*/ != 'main' }
+        draft: ${{ contains(${ GITHUB_REF##*/ }, 'feature') }}
 
     - uses: actions/upload-artifact@v2
       with:

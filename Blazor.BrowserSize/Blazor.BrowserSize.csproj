@@ -1,28 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-	<Authors>Sylvain Le Breton</Authors>
-	<Company>Octarina</Company>
-	<PackageId>Octarina.BrowserSize</PackageId>
-	<Description>
-		Blazor Browser Resize events (body,window,screen). Get element rectangle. Fullscreen check.
-	</Description>
-	<PackageTags>Blazor;Resize;Event;Browser;Window;Screen;getBoundingClientRect;Element;DOMRect</PackageTags>
-	<RepositoryUrl>https://github.com/OctarinaCompany/Blazor.BrowserSize</RepositoryUrl>
-	<PackageLicenseFile>LICENSE</PackageLicenseFile>
-	<PackageReadmeFile>README.md</PackageReadmeFile>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Authors>Sylvain Le Breton</Authors>
+		<Company>Octarina</Company>
+		<PackageId>Octarina.BrowserSize</PackageId>
+		<Description>
+			Blazor Browser Resize events (body,window,screen). Get element rectangle. Fullscreen check.
+		</Description>
+		<PackageTags>Blazor;Resize;Event;Browser;Window;Screen;getBoundingClientRect;Element;DOMRect</PackageTags>
+		<RepositoryUrl>https://github.com/OctarinaCompany/Blazor.BrowserSize</RepositoryUrl>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
 
 
-  <ItemGroup>
-    <SupportedPlatform Include="browser" />
-  </ItemGroup>
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.3" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\LICENSE" Pack="true" PackagePath="LICENSE"/>
+		<None Include="..\README.md" Pack="true" PackagePath="README.md"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.3" />
+	</ItemGroup>
 
 </Project>
