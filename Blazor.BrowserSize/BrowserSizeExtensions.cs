@@ -1,7 +1,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace OctarinaCompany.Blazor.BrowserSize;
+namespace Octarina.BrowserSize;
 
 static public class BrowserSizeExtensions
 {

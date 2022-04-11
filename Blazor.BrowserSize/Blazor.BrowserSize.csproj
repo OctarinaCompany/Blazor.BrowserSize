@@ -4,12 +4,14 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-	<Authors>Octarina</Authors>
+	<Authors>Sylvain Le Breton</Authors>
+	<Company>Octarina</Company>
 	<RepositoryUrl>https://github.com/OctarinaCompany/Blazor.BrowserSize</RepositoryUrl>
 	<PackageTags>Blazor;Resize;Event;Browser;Window;Screen;getBoundingClientRect</PackageTags>
 	<Description>
 		Blazor Browser Resize events (body,window,screen). Get element rectangle. Fullscreen check.
 	</Description>
+	<PackageId>Octarina.BrowserSize</PackageId>
   </PropertyGroup>
 
 

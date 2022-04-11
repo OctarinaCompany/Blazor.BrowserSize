@@ -24,13 +24,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+
     - name: Install .NET Core
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: '6.0.x'
-        source-url: https://nuget.pkg.github.com/${{ env.ORGANIZATION }}/index.json
-      env:
-        NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   source-url: https://nuget.pkg.github.com/${{ env.ORGANIZATION }}/index.json
+      # env:
+      #   NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Version
       shell: pwsh
@@ -60,10 +63,13 @@ jobs:
     - name: Pack
       run: dotnet pack ./${{ env.PROJECT_NAME }} --configuration Release --no-restore -p:PackageVersion=${{ env.VERSION }}
 
-    - name: Push package to github registry
-      run: dotnet nuget push ./${{ env.PROJECT_NAME }}/bin/Release/*.nupkg --skip-duplicate --no-symbols --api-key ${{ secrets.GITHUB_TOKEN }}
+    # - name: Push package to github registry
+    #   run: dotnet nuget push ./${{ env.PROJECT_NAME }}/bin/Release/*.nupkg --skip-duplicate --no-symbols --api-key ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Release notes and files
+    - name: Publish
+      run: nuget push ./${{ env.PROJECT_NAME }}/bin/Release/*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_APIKEY}}
+
+    - name: Release notes and artifacts
       uses: ncipollo/release-action@v1
       with:
         artifacts: "./${{ env.PROJECT_NAME }}/bin/Release/*.nupkg"

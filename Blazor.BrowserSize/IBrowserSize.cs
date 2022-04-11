@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 
-namespace OctarinaCompany.Blazor.BrowserSize;
+namespace Octarina.BrowserSize;
 
 public interface IBrowserSize
 {

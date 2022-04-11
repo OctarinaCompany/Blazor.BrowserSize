@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 
-namespace OctarinaCompany.Blazor.BrowserSize;
+namespace Octarina.BrowserSize;
 
 public class BrowserSize : IBrowserSize, IAsyncDisposable
 {

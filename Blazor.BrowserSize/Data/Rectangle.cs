@@ -1,4 +1,4 @@
-﻿namespace OctarinaCompany.Blazor.BrowserSize;
+﻿namespace Octarina.BrowserSize;
 
 public record Rectangle(int X, int Y, int Width, int Height)
 {
