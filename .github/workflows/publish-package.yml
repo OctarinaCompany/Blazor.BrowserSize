@@ -33,7 +33,7 @@ jobs:
       run: |
         # get the latest version from nuget registry, increment it and store it to ${{ env.VERSION }}
         $json = (Invoke-WebRequest "https://api.nuget.org/v3-flatcontainer/octarina.browsersize/index.json").Content | ConvertFrom-Json
-        if ($json.versions[0]) { $previousVersion = $json.versions[0] } else { $previousVersion = "0.0.0" }
+        if ($json.versions[0]) { $previousVersion = $json.versions[$json.versions.length-1] } else { $previousVersion = "0.0.0" }
         $version = ([int]($previousVersion.Replace(".","")) + 1).ToString("d3")
         $version = $version.Insert($version.length-1,".").Insert($version.length-2,".")
         echo "VERSION=$version" >> $Env:GITHUB_ENV
