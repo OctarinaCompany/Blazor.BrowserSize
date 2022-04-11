@@ -12,18 +12,16 @@
 		</Description>
 		<PackageTags>Blazor;Resize;Event;Browser;Window;Screen;getBoundingClientRect;Element;DOMRect</PackageTags>
 		<RepositoryUrl>https://github.com/OctarinaCompany/Blazor.BrowserSize</RepositoryUrl>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageReadmeFile>README2.md</PackageReadmeFile>
+		<PackageLicenseExpression>MIT OR Apache-2.0</PackageLicenseExpression>
 	</PropertyGroup>
 
-
 	<ItemGroup>
-		<SupportedPlatform Include="browser" />
+		<None Include=".\README2.md" Pack="true" PackagePath="README2.md" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="..\LICENSE" Pack="true" PackagePath="LICENSE"/>
-		<None Include="..\README.md" Pack="true" PackagePath="README.md"/>
+		<SupportedPlatform Include="browser" />
 	</ItemGroup>
 
 	<ItemGroup>
